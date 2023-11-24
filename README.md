@@ -132,7 +132,7 @@ Folder structure example:
 
 ## Docker
 
-You have an example of deployment with docker-compose in the `docker-compose.yml` file.
+You have an example of deployment with docker-compose in the [docker-compose.yml](https://github.com/provectio/ninjaone-teamswebhook/blob/main/docker-compose.yml) file.
 
 Else you can use the following command :
 
