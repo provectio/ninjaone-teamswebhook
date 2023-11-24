@@ -1,14 +1,14 @@
 **Table of content:**
 
 - [Description](#description)
+- [Deployment](#deployment)
+  - [Standalone](#standalone)
+  - [Docker](#docker)
 - [Configuration](#configuration)
   - [Example with secure token](#example-with-secure-token)
   - [Example without secure token](#example-without-secure-token)
   - [Configuration for NinjaOne](#configuration-for-ninjaone)
   - [Overwrite HTML template](#overwrite-html-template)
-- [Deployment](#deployment)
-  - [Standalone](#standalone)
-  - [Docker](#docker)
 - [Development](#development)
 
 # Description
@@ -18,6 +18,40 @@ This program created in Go aims to implement Microsoft Teams webhooks in [NinjaO
 We highly recommand to host it behind a reverse proxy like [Nginx](https://www.nginx.com/) or [Traefik](https://traefik.io/) and securing it with `SECURE_TOKEN` variable. The soft only listen on `POST` method.
 
 It use [Go templates](https://golang.org/pkg/html/template/) to generate the HTML message sent to Teams, [Echo](https://echo.labstack.com/) as web framework and [Charmbracelet Log](https://github.com/charmbracelet/log) as logger. Thanks to them for their works.
+
+# Deployment
+
+## Standalone
+
+You can download the binary for your architecture in the [release page](https://github.com/provectio/ninjaone-teamswebhook/releases).
+
+Environment variables can be read via the `.env` file placed next to the execution file. Don't forger to create the templates directory and place your own template in it.
+
+Folder structure example:
+
+```bash
+├── .env
+├── ninjaone-teamswebhook(.exe)
+└── templates
+    └── default.html
+```
+
+## Docker
+
+You have an example of deployment with docker-compose in the [docker-compose.yml](https://github.com/provectio/ninjaone-teamswebhook/blob/main/docker-compose.yml) file.
+
+Else you can use the following command :
+
+```bash
+docker run -d \
+  --name ninjaone-teamswebhook \
+  -p 3000:3000 \
+  -v /path/to/templates:/app/templates \
+  -e SECURE_TOKEN=YourSecretToken007 \
+  -e WEBHOOK_TEAM1=https://outlook.office.com/webhook/... \
+  -e WEBHOOK_TEAM2=https://outlook.office.com/webhook/... \
+  ghcr.io/provectio/ninjaone-teamswebhook:latest
+```
 
 # Configuration
 
@@ -114,40 +148,6 @@ type Data struct {
 	} `json:"message"`
 }
 
-```
-
-# Deployment
-
-## Standalone
-
-You can download the binary for your architecture in the [release page](https://github.com/provectio/ninjaone-teamswebhook/releases).
-
-Environment variables can be read via the `.env` file placed next to the execution file. Don't forger to create the templates directory and place your own template in it.
-
-Folder structure example:
-
-```bash
-├── .env
-├── ninjaone-teamswebhook(.exe)
-└── templates
-    └── default.html
-```
-
-## Docker
-
-You have an example of deployment with docker-compose in the [docker-compose.yml](https://github.com/provectio/ninjaone-teamswebhook/blob/main/docker-compose.yml) file.
-
-Else you can use the following command :
-
-```bash
-docker run -d \
-  --name ninjaone-teamswebhook \
-  -p 3000:3000 \
-  -v /path/to/templates:/app/templates \
-  -e SECURE_TOKEN=YourSecretToken007 \
-  -e WEBHOOK_TEAM1=https://outlook.office.com/webhook/... \
-  -e WEBHOOK_TEAM2=https://outlook.office.com/webhook/... \
-  ghcr.io/provectio/ninjaone-teamswebhook:latest
 ```
 
 # Development
