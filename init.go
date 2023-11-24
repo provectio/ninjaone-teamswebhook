@@ -14,10 +14,12 @@ func init() {
 	}
 
 	var err error
-	if logLevel, err = log.ParseLevel(os.Getenv("LOG_LEVEL")); err != nil {
-		log.Warn("Invalid log level, fallback to info", "error", err)
-	} else {
-		log.SetLevel(logLevel)
+	if env := os.Getenv("LOG_LEVEL"); env != "" {
+		if logLevel, err = log.ParseLevel(env); err != nil {
+			log.Warn("Invalid log level, fallback to info", "error", err)
+		} else {
+			log.SetLevel(logLevel)
+		}
 	}
 
 	secureToken = os.Getenv("SECURE_TOKEN")
