@@ -12,6 +12,11 @@ func errorHandler(err error, c echo.Context) {
 	code := http.StatusInternalServerError
 	message := "Internal Server Error, check server logs for more information"
 
+	if err == echo.ErrMethodNotAllowed {
+		code = http.StatusMethodNotAllowed
+		message = "Method not allowed"
+	}
+
 	req := c.Request()
 
 	he, ok := err.(*echo.HTTPError)

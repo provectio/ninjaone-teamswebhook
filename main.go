@@ -70,5 +70,5 @@ func main() {
 		return c.String(http.StatusOK, "OK")
 	})
 
-	e.Start(":" + port)
+	log.Fatal(e.Start(":" + port))
 }
