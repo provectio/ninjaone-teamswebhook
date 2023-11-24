@@ -43,7 +43,7 @@ WEBHOOK_TEAM1=https://outlook.office.com/webhook/...
 WEBHOOK_TEAM2=https://outlook.office.com/webhook/...
 ```
 
-For each webhook url declared, you can call it with the following url :
+For each webhook url declared, it can be call by NinjaOne with the following url :
 
 ```bash
 http://localhost:3000/team1?token=myTestToken
@@ -82,6 +82,37 @@ You can declare multiple webhooks for each teams channel you want to send notifi
 
 The default template can be found in `templates/default.html`. You can overwrite it by mounting a volume containing your own template.
 
+Note that all the data sent by NinjaOne are available in the template via the `data` variable.
+
+```go
+type RequestBody struct {
+	ID             int     `json:"id"`
+	ActivityTime   float64 `json:"activityTime"`
+	ActivityType   string  `json:"activityType"`
+	StatusCode     string  `json:"statusCode"`
+	Status         string  `json:"status"`
+	ActivityResult string  `json:"activityResult"`
+	UserID         int     `json:"userId"`
+	Message        string  `json:"message"`
+	Type           string  `json:"type"`
+	Data           `json:"data"`
+}
+
+type Data struct {
+	Message struct {
+		Code   string `json:"code"`
+		Params struct {
+			ClientID     string `json:"clientId"`
+			ClientName   string `json:"clientName"`
+			AppUserName  string `json:"appUserName"`
+			AppUserID    string `json:"appUserId"`
+			AppUserEmail string `json:"appUserEmail"`
+		} `json:"params"`
+	} `json:"message"`
+}
+
+```
+
 # Deployment
 
 ## Standalone
@@ -102,3 +133,16 @@ Folder structure example:
 ## Docker
 
 You have an example of deployment with docker-compose in the `docker-compose.yml` file.
+
+Else you can use the following command :
+
+```bash
+docker run -d \
+  --name ninjaone-teamswebhook \
+  -p 3000:3000 \
+  -v /path/to/templates:/app/templates \
+  -e SECURE_TOKEN=YourSecretToken007 \
+  -e WEBHOOK_TEAM1=https://outlook.office.com/webhook/... \
+  -e WEBHOOK_TEAM2=https://outlook.office.com/webhook/... \
+  ghcr.io/provectio/ninjaone-teamswebhook:latest
+```
