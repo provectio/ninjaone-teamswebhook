@@ -14,7 +14,7 @@
 
 This program created in Go aims to implement Microsoft Teams webhooks in [NinjaOne](https://www.ninjaone.com) notification channels.
 
-We highly recommande to host it behind a reverse proxy like [Nginx](https://www.nginx.com/) or [Traefik](https://traefik.io/). The soft only listen on `POST` method.
+We highly recommand to host it behind a reverse proxy like [Nginx](https://www.nginx.com/) or [Traefik](https://traefik.io/) and securing it with `SECURE_TOKEN` variable. The soft only listen on `POST` method.
 
 # Configuration
 
