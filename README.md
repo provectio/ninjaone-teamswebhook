@@ -16,6 +16,8 @@ This program created in Go aims to implement Microsoft Teams webhooks in [NinjaO
 
 We highly recommand to host it behind a reverse proxy like [Nginx](https://www.nginx.com/) or [Traefik](https://traefik.io/) and securing it with `SECURE_TOKEN` variable. The soft only listen on `POST` method.
 
+It use [Go templates](https://golang.org/pkg/html/template/) to generate the HTML message sent to Teams, [Echo](https://echo.labstack.com/) as web framework and [Charmbracelet Log](https://github.com/charmbracelet/log) as logger. Thanks to them for their works.
+
 # Configuration
 
 This project configuration is done via environment variables and must be publicly accessible. For that you can use Reverse Proxy like [Nginx](https://www.nginx.com/) or [Traefik](https://traefik.io/).
@@ -80,7 +82,7 @@ You can declare multiple webhooks for each teams channel you want to send notifi
 
 ## Overwrite HTML template
 
-The default template can be found in `templates/default.html`. You can overwrite it by mounting a volume containing your own template.
+The default template can be found in [templates/default.html](https://github.com/provectio/ninjaone-teamswebhook/blob/main/templates/default.html). You can overwrite it by mounting a volume containing your own template.
 
 Note that all the data sent by NinjaOne are available in the template via the `data` variable.
 

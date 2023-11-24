@@ -1,0 +1,5 @@
+{{ define "base" }}
+  <p>Action: <b>{{ .StatusCode }}</b></p>
+  <p>Status: <b>{{ .ActivityResult }}</b></p>
+  <p>User: <i>{{ .Data.Message.Params.AppUserName }}</i></p>
+{{ end }}

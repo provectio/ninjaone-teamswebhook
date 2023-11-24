@@ -13,10 +13,11 @@ func init() {
 		log.Info("No .env file, loading environnements variables")
 	}
 
-	if level, err := log.ParseLevel(os.Getenv("LOG_LEVEL")); err != nil {
-		log.SetLevel(log.InfoLevel)
+	var err error
+	if logLevel, err = log.ParseLevel(os.Getenv("LOG_LEVEL")); err != nil {
+		log.Warn("Invalid log level, fallback to info", "error", err)
 	} else {
-		log.SetLevel(level)
+		log.SetLevel(logLevel)
 	}
 
 	secureToken = os.Getenv("SECURE_TOKEN")
@@ -27,6 +28,11 @@ func init() {
 
 	if env := os.Getenv("TEMPLATES_DIRECTORY"); env != "" {
 		templatesDirectory = env
+	}
+
+	// Testing directory exist
+	if _, err := os.Stat(templatesDirectory); os.IsNotExist(err) {
+		log.Fatal("Templates directory not found", "directory", templatesDirectory)
 	}
 
 	for _, fullEnv := range os.Environ() {
