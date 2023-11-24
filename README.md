@@ -9,6 +9,7 @@
 - [Deployment](#deployment)
   - [Standalone](#standalone)
   - [Docker](#docker)
+- [Development](#development)
 
 # Description
 
@@ -148,3 +149,25 @@ docker run -d \
   -e WEBHOOK_TEAM2=https://outlook.office.com/webhook/... \
   ghcr.io/provectio/ninjaone-teamswebhook:latest
 ```
+
+# Development
+
+In VSCode, you can use the [prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension to format the code. Then install the plugins with `npm i`.
+
+Create a `.env` file with the following content :
+
+```bash
+LOG_LEVEL=debug
+SECURE_TOKEN=myTestToken
+WEBHOOK_TEAM1=https://outlook.office.com/webhook/...
+```
+
+Then run the program with `go run .` or `go build && ./main`.
+
+In Debug mode the full payload received will be printed in the console.
+
+You can use `{{ expand . }}` in your template to print the full parsed payload received.
+
+To take it publiclly accessible, you can use [ngrok](https://ngrok.com/) or the open soruce alternative (build in go) [pgrok](https://github.com/pgrok/pgrok) for example.
+
+> Feel free to contribute to this project by completing the [request payload](https://github.com/provectio/ninjaone-teamswebhook/blob/main/types.go) or adding new features.
