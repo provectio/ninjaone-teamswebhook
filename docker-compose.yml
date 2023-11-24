@@ -1,0 +1,14 @@
+version: "3"
+services:
+  app:
+    image: ghcr.io/provectio/ninjaone-teamswebhook:latest
+    ports:
+      - 3000:3000
+    environment:
+      - LISTEN_PORT=3000
+      - SECURE_TOKEN=YourSecretToken007
+      - WEBHOOK_CHANNEL1=https://outlook.office.com/webhook/...
+      - WEBHOOK_NAME-OF-CHANNEL=https://outlook.office.com/webhook/...
+    volumes:
+      - ./templates:/app/templates
+    
